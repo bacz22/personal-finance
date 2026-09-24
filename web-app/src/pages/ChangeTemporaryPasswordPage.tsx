@@ -52,9 +52,11 @@ export const ChangeTemporaryPasswordPage: React.FC = () => {
   const handleLogout = async () => {
     try {
       await logout()
-    } finally {
-      navigate('/login', { replace: true })
+    } catch (error) {
+      if (error instanceof Error && error.message.startsWith('Đã hủy đăng xuất')) return
+      toast.warning('Đã đăng xuất khỏi giao diện, nhưng backend chưa xác nhận thu hồi phiên.')
     }
+    navigate('/login', { replace: true })
   }
 
   return (

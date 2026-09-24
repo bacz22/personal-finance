@@ -17,6 +17,7 @@ public class CategoryResponse {
     private String description;
     private boolean active;
     private long transactionCount;
+    private long version;
 
     public static CategoryResponse from(Category category) {
         return from(category, 0);
@@ -32,6 +33,7 @@ public class CategoryResponse {
                 .description(category.getDescription())
                 .active(category.isActive())
                 .transactionCount(transactionCount)
+                .version(category.getVersion())
                 .build();
     }
 }

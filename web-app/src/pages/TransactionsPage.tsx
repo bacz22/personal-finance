@@ -336,6 +336,7 @@ export const TransactionsPage: React.FC = () => {
 
       <ViewTransactionModal
         isOpen={isViewModalOpen}
+        categoryOptions={allCategoryOptions}
         onClose={() => {
           setIsViewModalOpen(false)
           setViewingTransaction(null)

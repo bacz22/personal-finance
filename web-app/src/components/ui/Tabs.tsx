@@ -44,11 +44,19 @@ const sizeStyles = {
 }
 
 const activeColorStyles: Record<string, string> = {
-  default: 'text-slate-900 dark:text-slate-100',
-  emerald: 'text-emerald-600 dark:text-emerald-400',
-  blue: 'text-blue-600 dark:text-blue-400',
-  rose: 'text-rose-600 dark:text-rose-400',
-  amber: 'text-amber-600 dark:text-amber-400',
+  default: 'text-slate-900 dark:text-white',
+  emerald: 'text-emerald-700 dark:text-emerald-200',
+  blue: 'text-blue-700 dark:text-blue-200',
+  rose: 'text-rose-700 dark:text-rose-200',
+  amber: 'text-amber-700 dark:text-amber-200',
+}
+
+const activeIndicatorStyles: Record<string, string> = {
+  default: 'bg-white/95 dark:bg-slate-700/90 border-white/95 dark:border-slate-600/70',
+  emerald: 'bg-emerald-50 dark:bg-emerald-950/70 border-emerald-200 dark:border-emerald-700/70',
+  blue: 'bg-blue-50 dark:bg-blue-950/70 border-blue-200 dark:border-blue-700/70',
+  rose: 'bg-rose-50 dark:bg-rose-950/70 border-rose-200 dark:border-rose-700/70',
+  amber: 'bg-amber-50 dark:bg-amber-950/70 border-amber-200 dark:border-amber-700/70',
 }
 
 export const Tabs = <T extends string = string>({
@@ -111,6 +119,8 @@ export const Tabs = <T extends string = string>({
   }, [updateIndicator])
 
   const s = sizeStyles[size]
+  const activeColorKey = tabs[activeIndex]?.activeColor || 'default'
+  const activeIndicatorStyle = activeIndicatorStyles[activeColorKey] || activeIndicatorStyles.default
 
   return (
     <div
@@ -124,7 +134,7 @@ export const Tabs = <T extends string = string>({
       {/* 1. SLIDING ACTIVE PILL INDICATOR (HIỆU ỨNG TRƯỢT MƯỢT MÀ GPU ACCELERATED) */}
       <span
         aria-hidden="true"
-        className={`absolute top-1 bottom-1 bg-white/95 dark:bg-slate-700/90 backdrop-blur-md shadow-xs border border-white/95 dark:border-slate-600/70 pointer-events-none transition-all duration-300 ${
+        className={`absolute top-1 bottom-1 backdrop-blur-md shadow-xs border pointer-events-none transition-all duration-300 ${activeIndicatorStyle} ${
           s.indicator
         } ${variant === 'pill' ? '!rounded-full' : ''}`}
         style={{

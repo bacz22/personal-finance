@@ -376,7 +376,7 @@ const AddCategoryModalContent: React.FC<AddCategoryModalContentProps> = ({
                     ? 'Ví dụ: Cơm trưa, Xăng xe, Mua sắm đồ tết...'
                     : 'Ví dụ: Tiền lương, Hoa hồng, Bán hàng online...'
                 }
-                className={`w-full h-11 px-4 text-sm bg-white/70 dark:bg-slate-800/70 backdrop-blur-md border border-white/80 dark:border-slate-700/70 rounded-2xl shadow-2xs focus:bg-white/85 dark:focus:bg-slate-800/85 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all placeholder-slate-400 text-slate-900 dark:text-slate-100 ${
+                className={`w-full h-11 px-4 text-base md:text-sm bg-white/70 dark:bg-slate-800/70 backdrop-blur-md border border-white/80 dark:border-slate-700/70 rounded-2xl shadow-2xs focus:bg-white/85 dark:focus:bg-slate-800/85 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all placeholder-slate-400 text-slate-900 dark:text-slate-100 ${
                   errors.name
                     ? 'border-rose-400 focus:ring-rose-400/20 focus:border-rose-500'
                     : 'border-white/80 dark:border-slate-700/70 focus:ring-emerald-500/20 focus:border-emerald-500'

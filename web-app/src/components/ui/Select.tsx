@@ -190,7 +190,7 @@ export const Select: React.FC<SelectProps> = ({
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Tìm kiếm danh mục..."
-                    className="w-full pl-9 pr-3 py-2 text-xs bg-[var(--glass-surface,rgba(255,255,255,0.72))] dark:bg-slate-800/75 backdrop-blur-[var(--glass-blur,16px)] border border-white/80 dark:border-slate-700/60 rounded-xl text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-emerald-500/80 focus:ring-2 focus:ring-emerald-500/20 focus:bg-[var(--glass-surface,rgba(255,255,255,0.88))] dark:focus:bg-slate-800/88 shadow-2xs transition-all"
+                    className="w-full pl-9 pr-3 py-2 text-base md:text-xs bg-[var(--glass-surface,rgba(255,255,255,0.72))] dark:bg-slate-800/75 backdrop-blur-[var(--glass-blur,16px)] border border-white/80 dark:border-slate-700/60 rounded-xl text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-emerald-500/80 focus:ring-2 focus:ring-emerald-500/20 focus:bg-[var(--glass-surface,rgba(255,255,255,0.88))] dark:focus:bg-slate-800/88 shadow-2xs transition-all"
                   />
                 </div>
               </div>

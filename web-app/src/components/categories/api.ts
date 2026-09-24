@@ -1,16 +1,21 @@
-import { apiRequest } from '../../api'
+import {
+  createOfflineCategory,
+  deactivateOfflineCategory,
+  listOfflineCategories,
+  updateOfflineCategory,
+} from '../../offline/repository'
 import { type CategoryDraft, type CategoryItem, type CategoryType } from './types'
 import { CATEGORY_ICON_OPTIONS } from './palette'
 
 type ApiCategoryType = 'INCOME' | 'EXPENSE'
 
 interface ApiCategory {
-  id: number
+  id: string
   name: string
   type: ApiCategoryType
   iconKey: string
   color: string
-  description?: string
+  description?: string | null
   active: boolean
   transactionCount: number
 }
@@ -27,7 +32,6 @@ interface CategoryWriteRequest {
 function toUiCategory(category: ApiCategory): CategoryItem {
   const icon = CATEGORY_ICON_OPTIONS.find((option) => option.id === category.iconKey)
     ?? CATEGORY_ICON_OPTIONS.find((option) => option.id === 'more-horizontal')!
-
   return {
     id: String(category.id),
     name: category.name,
@@ -36,7 +40,7 @@ function toUiCategory(category: ApiCategory): CategoryItem {
     color: category.color,
     status: category.active ? 'active' : 'inactive',
     transactionCount: category.transactionCount,
-    description: category.description,
+    description: category.description || undefined,
   }
 }
 
@@ -60,27 +64,33 @@ function toWriteRequest(category: CategoryDraft | CategoryItem): CategoryWriteRe
 }
 
 export const categoriesApi = {
-  list: async () => {
-    const categories = await apiRequest<ApiCategory[]>('/api/v1/categories')
-    return categories.map(toUiCategory)
-  },
+  list: async () => (await listOfflineCategories()).map((category) => toUiCategory(category)),
 
   create: async (category: CategoryDraft) => {
-    const created = await apiRequest<ApiCategory>('/api/v1/categories', {
-      method: 'POST',
-      body: JSON.stringify(toWriteRequest(category)),
-    })
-    return toUiCategory(created)
+    const request = toWriteRequest(category)
+    return toUiCategory(await createOfflineCategory({
+      ...request,
+      description: request.description ?? null,
+    }, { ...request }))
   },
 
   update: async (category: CategoryItem) => {
-    const updated = await apiRequest<ApiCategory>(`/api/v1/categories/${category.id}`, {
-      method: 'PUT',
-      body: JSON.stringify(toWriteRequest(category)),
-    })
-    return toUiCategory(updated)
+    const request = toWriteRequest(category)
+    const updated = await updateOfflineCategory({
+      id: category.id,
+      name: request.name,
+      type: request.type,
+      iconKey: request.iconKey,
+      color: request.color,
+      description: request.description ?? null,
+      active: request.active,
+      transactionCount: category.transactionCount ?? 0,
+    }, { ...request })
+    return toUiCategory(updated.data)
   },
 
-  deactivate: (categoryId: string) =>
-    apiRequest<void>(`/api/v1/categories/${categoryId}`, { method: 'DELETE' }),
+  deactivate: async (categoryId: string) => {
+    const category = await deactivateOfflineCategory(categoryId)
+    return toUiCategory(category)
+  },
 }

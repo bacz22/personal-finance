@@ -107,7 +107,8 @@ public class BudgetService {
                 category.getIconKey(),
                 category.getColor(),
                 budget.getLimitAmount(),
-                spent
+                spent,
+                budget.getVersion()
         );
     }
 

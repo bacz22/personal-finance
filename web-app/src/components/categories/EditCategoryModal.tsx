@@ -464,7 +464,7 @@ const EditCategoryModalContent: React.FC<EditCategoryModalContentProps> = ({
                   if (errors.name) setErrors({})
                 }}
                 placeholder="Ví dụ: Ăn uống, Tiền điện, Lương tháng..."
-                className={`w-full h-11 px-3.5 text-sm bg-[var(--glass-surface,rgba(255,255,255,0.75))] dark:bg-slate-800/75 backdrop-blur-[var(--glass-blur,16px)] border rounded-2xl focus:outline-hidden focus:ring-2 focus:bg-[var(--glass-surface,rgba(255,255,255,0.88))] dark:focus:bg-slate-800/88 transition-all placeholder-slate-400 text-slate-900 dark:text-slate-100 ${
+                className={`w-full h-11 px-3.5 text-base md:text-sm bg-[var(--glass-surface,rgba(255,255,255,0.75))] dark:bg-slate-800/75 backdrop-blur-[var(--glass-blur,16px)] border rounded-2xl focus:outline-hidden focus:ring-2 focus:bg-[var(--glass-surface,rgba(255,255,255,0.88))] dark:focus:bg-slate-800/88 transition-all placeholder-slate-400 text-slate-900 dark:text-slate-100 ${
                   errors.name
                     ? 'border-rose-400 focus:ring-rose-500/20 focus:border-rose-500'
                     : 'border-white/80 dark:border-slate-700/70 focus:ring-emerald-500/20 focus:border-emerald-500'

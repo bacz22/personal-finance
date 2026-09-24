@@ -175,6 +175,12 @@ async function refreshAccessToken(): Promise<string | null> {
   return refreshInFlight.promise
 }
 
+async function restoreAccessTokenForBootstrap(): Promise<string> {
+  const response = await fetchJson<{ accessToken: string }>('/api/v1/auth/refresh', { method: 'POST' })
+  setAccessToken(response.accessToken)
+  return response.accessToken
+}
+
 export async function apiRequest<T>(
   path: string,
   init: RequestInit = {},
@@ -230,6 +236,7 @@ export const authApi = {
       { authenticated: false, retryUnauthorized: false },
     ),
   refresh: refreshAccessToken,
+  restoreForBootstrap: restoreAccessTokenForBootstrap,
   logout: (token: string | null) =>
     fetchJson<void>('/api/v1/auth/logout', { method: 'POST' }, token),
   me: () => apiRequest<UserSummary>('/api/v1/users/me'),

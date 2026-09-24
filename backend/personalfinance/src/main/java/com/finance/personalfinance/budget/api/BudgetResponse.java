@@ -10,6 +10,7 @@ public record BudgetResponse(
         String categoryIconKey,
         String categoryColor,
         BigDecimal limitAmount,
-        BigDecimal spent
+        BigDecimal spent,
+        long version
 ) {
 }

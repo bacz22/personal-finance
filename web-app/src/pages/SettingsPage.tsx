@@ -32,11 +32,11 @@ export const SettingsPage: React.FC = () => {
     try {
       await logout()
       toast.success('Đã đăng xuất.')
-    } catch {
+    } catch (error) {
+      if (error instanceof Error && error.message.startsWith('Đã hủy đăng xuất')) return
       toast.warning('Đã đăng xuất khỏi giao diện, nhưng backend chưa xác nhận thu hồi phiên.')
-    } finally {
-      navigate('/login', { replace: true })
     }
+    navigate('/login', { replace: true })
   }
 
   return (

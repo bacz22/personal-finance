@@ -92,7 +92,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           aria-invalid={!!error}
           aria-describedby={error ? errorId : helperText ? helperId : undefined}
           className={cn(
-            'w-full text-sm rounded-2xl transition-all duration-200 p-3 border shadow-2xs focus:outline-none resize-none backdrop-blur-[var(--glass-blur,16px)]',
+            'w-full text-base md:text-sm rounded-2xl transition-all duration-200 p-3 border shadow-2xs focus:outline-none resize-none backdrop-blur-[var(--glass-blur,16px)]',
             disabled
               ? 'bg-slate-100/60 dark:bg-slate-800/40 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-700/50 cursor-not-allowed select-none'
               : error

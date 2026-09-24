@@ -25,6 +25,7 @@ public class TransactionResponse {
     private String note;
     private Instant createdAt;
     private Instant updatedAt;
+    private long version;
 
     public static TransactionResponse from(Transaction transaction) {
         return TransactionResponse.builder()
@@ -40,6 +41,7 @@ public class TransactionResponse {
                 .note(transaction.getNote())
                 .createdAt(transaction.getCreatedAt())
                 .updatedAt(transaction.getUpdatedAt())
+                .version(transaction.getVersion())
                 .build();
     }
 }

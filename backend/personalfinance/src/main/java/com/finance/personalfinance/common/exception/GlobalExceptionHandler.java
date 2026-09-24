@@ -2,9 +2,11 @@ package com.finance.personalfinance.common.exception;
 
 import com.finance.personalfinance.common.api.ApiErrorResponse;
 import com.finance.personalfinance.common.api.FieldErrorDetail;
+import jakarta.persistence.OptimisticLockException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -68,6 +70,15 @@ public class GlobalExceptionHandler {
         log.warn("Data integrity violation at {}: {}", request.getRequestURI(), exception.getMessage());
         return build(HttpStatus.CONFLICT, "DATA_INTEGRITY_VIOLATION",
                 "Dữ liệu vi phạm ràng buộc của hệ thống.", request, null);
+    }
+
+    @ExceptionHandler({ObjectOptimisticLockingFailureException.class, OptimisticLockException.class})
+    public ResponseEntity<ApiErrorResponse> handleOptimisticLock(
+            Exception exception,
+            HttpServletRequest request
+    ) {
+        return build(HttpStatus.CONFLICT, "SYNC_VERSION_CONFLICT",
+                "Dữ liệu đã được thay đổi trên thiết bị khác. Hãy tải lại và chọn bản cần giữ.", request, null);
     }
 
     @ExceptionHandler(Exception.class)

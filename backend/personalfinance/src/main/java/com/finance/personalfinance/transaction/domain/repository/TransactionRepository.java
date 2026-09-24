@@ -16,6 +16,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
     @EntityGraph(attributePaths = "category")
     Optional<Transaction> findByIdAndUserId(Long id, Long userId);
 
+    @EntityGraph(attributePaths = "category")
+    List<Transaction> findAllByUserIdOrderByTransactionDateDescIdDesc(Long userId);
+
     long countByCategory_IdAndUserId(Long categoryId, Long userId);
 
     boolean existsByCategory_IdAndUserId(Long categoryId, Long userId);

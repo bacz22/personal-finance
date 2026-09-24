@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 import { useAuth } from '../../AuthContext'
 import { useToast } from '../ui'
+import { OfflineStatusBanner } from './OfflineStatusBanner'
 
 interface NavItem {
   name: string
@@ -47,13 +48,19 @@ export const AppLayout: React.FC = () => {
     .join('')
 
   const handleLogout = async () => {
+    let cancelled = false
     try {
       await logout()
       toast.success('Đã đăng xuất.')
-    } catch {
+    } catch (error) {
+      if (error instanceof Error && error.message.startsWith('Đã hủy đăng xuất')) {
+        cancelled = true
+        toast.warning('Đã giữ lại các thay đổi chưa đồng bộ.')
+        return
+      }
       toast.warning('Đã đăng xuất khỏi giao diện, nhưng backend chưa xác nhận thu hồi phiên.')
     } finally {
-      navigate('/login', { replace: true })
+      if (!cancelled) navigate('/login', { replace: true })
     }
   }
 
@@ -266,6 +273,7 @@ export const AppLayout: React.FC = () => {
         {/* ========================================================================= */}
         <div className="flex-1 flex flex-col min-w-0 bg-transparent">
           <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 pb-28 md:pb-8">
+            <OfflineStatusBanner />
             <div
               key={location.pathname}
               className="animate-in fade-in duration-200 ease-out"

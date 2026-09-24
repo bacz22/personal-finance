@@ -20,6 +20,9 @@ public interface BudgetRepository extends JpaRepository<Budget, Long> {
     List<Budget> findAllByUserIdAndMonthOrderByCategory_NameAsc(Long userId, LocalDate month);
 
     @EntityGraph(attributePaths = "category")
+    List<Budget> findAllByUserIdOrderByMonthDescCategory_NameAsc(Long userId);
+
+    @EntityGraph(attributePaths = "category")
     Optional<Budget> findByIdAndUserId(Long id, Long userId);
 
     boolean existsByUserIdAndMonthAndCategory_Id(Long userId, LocalDate month, Long categoryId);
