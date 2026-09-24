@@ -1,0 +1,41 @@
+# Local secrets and environment files. Keep only safe templates in Git.
+.env
+.env.*
+!.env.example
+!.env.production.example
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.production.example
+
+# Build output and local tool state
+**/target/
+**/node_modules/
+**/dist/
+**/build/
+.idea/
+.gemini/
+.agents/
+.docx-qa/
+.vscode/
+*.log
+*.class
+/Tai_lieu_du_an_web_quan_ly_chi_tieu.docx
+/prompts_ui_ux_pro_max_quan_ly_chi_tieu.md
+
+# Local exports and private keys
+*.dump
+*.backup
+*.sql.gz
+*.7z
+*.zip
+*.jks
+*.p12
+*.pem
+*.key
+*.crt
+*.cer
+
+# OS metadata
+.DS_Store
+Thumbs.db

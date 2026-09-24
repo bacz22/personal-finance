@@ -1,0 +1,516 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+:root {
+  color-scheme: light;
+  font-family: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  /* ========================================================================= */
+  /* LIQUID GLASS SYSTEM TOKENS (DYNAMIC VIA SETTINGS) */
+  /* ========================================================================= */
+  --glass-opacity: 0.82;
+  --glass-blur: 16px;
+  --glass-surface: rgba(255, 255, 255, var(--glass-opacity));
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.08);
+
+  /* Emerald Aurora (Nền mặc định giàu chiều sâu ánh sáng) */
+  --bg-mesh:
+    radial-gradient(circle at 10% 15%, rgba(16, 185, 129, 0.24) 0%, transparent 42%),
+    radial-gradient(circle at 90% 12%, rgba(14, 165, 233, 0.22) 0%, transparent 40%),
+    radial-gradient(circle at 50% 85%, rgba(129, 140, 248, 0.18) 0%, transparent 46%),
+    radial-gradient(circle at 82% 88%, rgba(52, 211, 153, 0.20) 0%, transparent 38%),
+    radial-gradient(circle at 35% 45%, rgba(6, 182, 212, 0.14) 0%, transparent 45%),
+    linear-gradient(135deg, #ECFDF5 0%, #F8FAFC 45%, #F0F9FF 100%);
+
+  /* ========================================================================= */
+  /* DESIGN TOKENS: BRAND & THEME ACCENT */
+  /* ========================================================================= */
+  --color-brand-primary: #059669;
+  --color-brand-hover: #047857;
+  --color-brand-light: rgba(16, 185, 129, 0.14);
+  --color-brand-ring: rgba(16, 185, 129, 0.25);
+
+  /* ========================================================================= */
+  /* DESIGN TOKENS: FINANCIAL SEMANTICS (DOUBLE-ENCODED) */
+  /* ========================================================================= */
+  --color-income: #059669;
+  --color-income-hover: #047857;
+  --color-income-bg: rgba(16, 185, 129, 0.12);
+  --color-income-border: rgba(16, 185, 129, 0.25);
+
+  --color-expense: #E11D48;
+  --color-expense-hover: #BE123C;
+  --color-expense-bg: rgba(225, 29, 72, 0.12);
+  --color-expense-border: rgba(225, 29, 72, 0.25);
+
+  --color-warning: #D97706;
+  --color-warning-bg: rgba(217, 119, 6, 0.12);
+  --color-warning-border: rgba(217, 119, 6, 0.25);
+
+  --color-danger: #DC2626;
+  --color-danger-bg: rgba(220, 38, 38, 0.12);
+  --color-danger-border: rgba(220, 38, 38, 0.25);
+
+  /* ========================================================================= */
+  /* DESIGN TOKENS: CATEGORY PALETTE */
+  /* ========================================================================= */
+  --cat-food: #F97316;
+  --cat-housing: #2563EB;
+  --cat-transport: #0D9488;
+  --cat-shopping: #8B5CF6;
+  --cat-entertainment: #EC4899;
+  --cat-health: #06B6D4;
+  --cat-education: #10B981;
+  --cat-salary: #059669;
+  --cat-bonus: #059669;
+  --cat-invest: #059669;
+  --cat-other: #64748B;
+
+  /* ========================================================================= */
+  /* DESIGN TOKENS: CHART PALETTE & AXES */
+  /* ========================================================================= */
+  --chart-1: var(--cat-food);
+  --chart-2: var(--cat-housing);
+  --chart-3: var(--cat-transport);
+  --chart-4: var(--cat-shopping);
+  --chart-5: var(--cat-entertainment);
+  --chart-6: var(--cat-health);
+  --chart-7: var(--cat-education);
+  --chart-8: var(--cat-other);
+
+  --chart-grid: #E2E8F0;
+  --chart-axis: #CBD5E1;
+  --chart-text: #94A3B8;
+  --chart-tooltip-bg: #0F172A;
+  --chart-tooltip-text: #FFFFFF;
+  --chart-highlight: rgba(248, 250, 252, 0.8);
+}
+
+/* ========================================================================= */
+/* LIQUID GLASS THEME PRESETS */
+/* ========================================================================= */
+[data-bg-theme="ocean"] {
+  --bg-mesh:
+    radial-gradient(circle at 14% 16%, rgba(14, 165, 233, 0.28) 0%, transparent 45%),
+    radial-gradient(circle at 86% 18%, rgba(6, 182, 212, 0.24) 0%, transparent 42%),
+    radial-gradient(circle at 50% 84%, rgba(59, 130, 246, 0.20) 0%, transparent 48%),
+    radial-gradient(circle at 82% 82%, rgba(14, 165, 233, 0.18) 0%, transparent 40%),
+    linear-gradient(135deg, #F0F9FF 0%, #F8FAFC 48%, #E0F2FE 100%);
+}
+
+[data-bg-theme="cosmic"] {
+  --bg-mesh:
+    radial-gradient(circle at 14% 16%, rgba(139, 92, 246, 0.25) 0%, transparent 45%),
+    radial-gradient(circle at 86% 18%, rgba(217, 70, 239, 0.20) 0%, transparent 42%),
+    radial-gradient(circle at 50% 82%, rgba(99, 102, 241, 0.22) 0%, transparent 48%),
+    radial-gradient(circle at 80% 85%, rgba(168, 85, 247, 0.18) 0%, transparent 40%),
+    linear-gradient(135deg, #FAF5FF 0%, #F8FAFC 50%, #F5F3FF 100%);
+}
+
+[data-bg-theme="sunset"] {
+  --bg-mesh:
+    radial-gradient(circle at 14% 16%, rgba(249, 115, 22, 0.24) 0%, transparent 45%),
+    radial-gradient(circle at 86% 18%, rgba(244, 63, 94, 0.20) 0%, transparent 42%),
+    radial-gradient(circle at 50% 82%, rgba(234, 88, 12, 0.18) 0%, transparent 48%),
+    radial-gradient(circle at 80% 85%, rgba(251, 146, 60, 0.18) 0%, transparent 40%),
+    linear-gradient(135deg, #FFF7ED 0%, #F8FAFC 50%, #FFF1F2 100%);
+}
+
+[data-bg-theme="slate"] {
+  --bg-mesh:
+    radial-gradient(circle at 14% 16%, rgba(100, 116, 139, 0.20) 0%, transparent 45%),
+    radial-gradient(circle at 86% 18%, rgba(71, 85, 105, 0.16) 0%, transparent 42%),
+    radial-gradient(circle at 50% 82%, rgba(148, 163, 184, 0.18) 0%, transparent 48%),
+    linear-gradient(135deg, #F1F5F9 0%, #F8FAFC 50%, #E2E8F0 100%);
+}
+
+/* Dark Mode Tokens & Overrides */
+.dark,
+[data-theme="dark"] {
+  --bg-mesh: radial-gradient(at 20% 0%, #0F172A 0%, #020617 45%, #064E3B 100%);
+  --glass-surface: rgba(15, 23, 42, var(--glass-opacity));
+  --glass-border: rgba(148, 163, 184, 0.22);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35);
+  --chart-grid: #334155;
+  --chart-axis: #475569;
+  --chart-text: #64748B;
+  --chart-tooltip-bg: #1E293B;
+  --chart-highlight: rgba(148, 163, 184, 0.18);
+}
+
+.theme-preview-glass {
+  background-color: rgba(255, 255, 255, var(--preview-opacity, 0.82));
+}
+
+/* Use the browser/OS color preference consistently for CSS tokens as well as
+   Tailwind's `dark:` utilities. Without this, dark utility classes can render
+   over the light-only page gradient and glass surfaces. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg-mesh:
+      radial-gradient(circle at 12% 12%, rgba(16, 185, 129, 0.12) 0%, transparent 42%),
+      radial-gradient(circle at 88% 12%, rgba(14, 165, 233, 0.10) 0%, transparent 40%),
+      radial-gradient(circle at 50% 90%, rgba(99, 102, 241, 0.10) 0%, transparent 46%),
+      linear-gradient(135deg, #0B1220 0%, #0F172A 52%, #0B1B25 100%);
+    --glass-surface: rgba(15, 23, 42, var(--glass-opacity));
+    --glass-border: rgba(148, 163, 184, 0.22);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35);
+    --chart-grid: #334155;
+    --chart-axis: #475569;
+    --chart-text: #94A3B8;
+    --chart-tooltip-bg: #1E293B;
+    --chart-highlight: rgba(148, 163, 184, 0.18);
+  }
+
+  .theme-preview-glass {
+    background-color: rgba(15, 23, 42, var(--preview-opacity, 0.82));
+  }
+
+  [data-bg-theme="ocean"] {
+    --bg-mesh:
+      radial-gradient(circle at 14% 16%, rgba(14, 165, 233, 0.16) 0%, transparent 45%),
+      radial-gradient(circle at 86% 18%, rgba(6, 182, 212, 0.12) 0%, transparent 42%),
+      linear-gradient(135deg, #071827 0%, #0F172A 52%, #082C3D 100%);
+  }
+
+  [data-bg-theme="cosmic"] {
+    --bg-mesh:
+      radial-gradient(circle at 14% 16%, rgba(139, 92, 246, 0.16) 0%, transparent 45%),
+      radial-gradient(circle at 86% 18%, rgba(217, 70, 239, 0.12) 0%, transparent 42%),
+      linear-gradient(135deg, #151027 0%, #111827 52%, #20102B 100%);
+  }
+
+  [data-bg-theme="sunset"] {
+    --bg-mesh:
+      radial-gradient(circle at 14% 16%, rgba(249, 115, 22, 0.14) 0%, transparent 45%),
+      radial-gradient(circle at 86% 18%, rgba(244, 63, 94, 0.13) 0%, transparent 42%),
+      linear-gradient(135deg, #21120F 0%, #171827 52%, #25131A 100%);
+  }
+
+  [data-bg-theme="slate"] {
+    --bg-mesh:
+      radial-gradient(circle at 14% 16%, rgba(100, 116, 139, 0.14) 0%, transparent 45%),
+      radial-gradient(circle at 86% 18%, rgba(71, 85, 105, 0.12) 0%, transparent 42%),
+      linear-gradient(135deg, #111827 0%, #0F172A 52%, #1E293B 100%);
+  }
+
+  body {
+    color: #E2E8F0;
+  }
+
+  /* Keep legacy light-palette utilities readable on dark glass when a
+     component has not yet declared an explicit `dark:` counterpart. */
+  [class~="text-slate-900"]:not([class*="dark:text-"]),
+  [class~="text-slate-800"]:not([class*="dark:text-"]),
+  [class~="text-gray-900"]:not([class*="dark:text-"]),
+  [class~="text-gray-800"]:not([class*="dark:text-"]) {
+    color: #F1F5F9;
+  }
+
+  [class~="text-slate-700"]:not([class*="dark:text-"]),
+  [class~="text-slate-600"]:not([class*="dark:text-"]),
+  [class~="text-slate-500"]:not([class*="dark:text-"]),
+  [class~="text-gray-700"]:not([class*="dark:text-"]),
+  [class~="text-gray-600"]:not([class*="dark:text-"]),
+  [class~="text-gray-500"]:not([class*="dark:text-"]) {
+    color: #CBD5E1;
+  }
+
+  [class~="text-slate-400"]:not([class*="dark:text-"]),
+  [class~="text-slate-300"]:not([class*="dark:text-"]),
+  [class~="text-gray-400"]:not([class*="dark:text-"]),
+  [class~="text-gray-300"]:not([class*="dark:text-"]) {
+    color: #94A3B8;
+  }
+
+  [class*="dark:text-slate-500"] {
+    color: #94A3B8;
+  }
+
+  [class~="text-emerald-600"]:not([class*="dark:text-"]),
+  [class~="text-emerald-700"]:not([class*="dark:text-"]),
+  [class~="text-emerald-800"]:not([class*="dark:text-"]),
+  [class~="text-teal-600"]:not([class*="dark:text-"]),
+  [class~="text-teal-700"]:not([class*="dark:text-"]),
+  [class~="text-blue-600"]:not([class*="dark:text-"]),
+  [class~="text-blue-700"]:not([class*="dark:text-"]),
+  [class~="text-indigo-600"]:not([class*="dark:text-"]),
+  [class~="text-indigo-700"]:not([class*="dark:text-"]),
+  [class~="text-sky-600"]:not([class*="dark:text-"]),
+  [class~="text-sky-700"]:not([class*="dark:text-"]) {
+    color: #6EE7B7;
+  }
+
+  [class~="text-rose-600"]:not([class*="dark:text-"]),
+  [class~="text-rose-700"]:not([class*="dark:text-"]),
+  [class~="text-rose-800"]:not([class*="dark:text-"]),
+  [class~="text-rose-900"]:not([class*="dark:text-"]),
+  [class~="text-red-700"]:not([class*="dark:text-"]) {
+    color: #FDA4AF;
+  }
+
+  [class~="text-amber-600"]:not([class*="dark:text-"]),
+  [class~="text-amber-700"]:not([class*="dark:text-"]),
+  [class~="text-amber-800"]:not([class*="dark:text-"]),
+  [class~="text-amber-900"]:not([class*="dark:text-"]),
+  [class~="text-orange-700"]:not([class*="dark:text-"]) {
+    color: #FCD34D;
+  }
+
+  [class~="text-violet-600"]:not([class*="dark:text-"]),
+  [class~="text-violet-700"]:not([class*="dark:text-"]),
+  [class~="text-purple-700"]:not([class*="dark:text-"]) {
+    color: #C4B5FD;
+  }
+
+  :is(
+    [class~="bg-white"], [class~="bg-white/30"], [class~="bg-white/40"],
+    [class~="bg-white/50"], [class~="bg-white/60"], [class~="bg-white/70"],
+    [class~="bg-white/80"], [class~="bg-white/85"], [class~="bg-white/90"],
+    [class~="bg-white/95"], [class~="bg-slate-50"], [class~="bg-slate-50/70"],
+    [class~="bg-slate-50/80"], [class~="bg-slate-50/90"],
+    [class~="bg-slate-100"], [class~="bg-slate-100/60"],
+    [class~="bg-gray-50"], [class~="bg-gray-100"]
+  ):not([class*="dark:bg-"]) {
+    background-color: rgba(30, 41, 59, 0.78);
+  }
+
+  :is(
+    [class~="bg-slate-200"], [class~="bg-slate-200/40"],
+    [class~="bg-slate-200/50"], [class~="bg-slate-200/70"],
+    [class~="bg-slate-200/80"], [class~="bg-slate-200/90"],
+    [class~="bg-slate-300"], [class~="bg-slate-300/60"]
+  ):not([class*="dark:bg-"]) {
+    background-color: rgba(71, 85, 105, 0.55);
+  }
+
+  [class~="bg-slate-400"]:not([class*="dark:bg-"]) {
+    background-color: #475569;
+  }
+
+  :is(
+    [class~="bg-emerald-50"], [class~="bg-emerald-50/50"],
+    [class~="bg-emerald-50/60"], [class~="bg-emerald-50/70"],
+    [class~="bg-emerald-50/80"], [class~="bg-teal-50"]
+  ):not([class*="dark:bg-"]) {
+    background-color: rgba(16, 185, 129, 0.16);
+  }
+
+  :is(
+    [class~="bg-rose-50"], [class~="bg-rose-50/40"], [class~="bg-rose-50/50"],
+    [class~="bg-rose-50/60"], [class~="bg-rose-50/80"], [class~="bg-red-50"]
+  ):not([class*="dark:bg-"]) {
+    background-color: rgba(244, 63, 94, 0.16);
+  }
+
+  :is(
+    [class~="bg-amber-50"], [class~="bg-amber-50/50"], [class~="bg-amber-50/70"],
+    [class~="bg-amber-50/80"], [class~="bg-orange-50"]
+  ):not([class*="dark:bg-"]) {
+    background-color: rgba(245, 158, 11, 0.16);
+  }
+
+  :is(
+    [class~="bg-blue-50"], [class~="bg-blue-50/50"], [class~="bg-indigo-50"],
+    [class~="bg-sky-50"], [class~="bg-violet-50"]
+  ):not([class*="dark:bg-"]) {
+    background-color: rgba(99, 102, 241, 0.16);
+  }
+
+  :is(
+    [class~="border-slate-100"], [class~="border-slate-200"],
+    [class~="border-slate-200/40"], [class~="border-slate-200/50"],
+    [class~="border-slate-200/60"], [class~="border-slate-200/70"],
+    [class~="border-slate-200/80"], [class~="border-slate-200/90"],
+    [class~="border-slate-300"], [class~="border-slate-300/60"],
+    [class~="border-slate-300/80"], [class~="border-slate-400"],
+    [class~="border-gray-200"], [class~="border-gray-300"],
+    [class~="border-white"], [class~="border-white/30"], [class~="border-white/40"],
+    [class~="border-white/50"], [class~="border-white/60"], [class~="border-white/70"],
+    [class~="border-white/80"], [class~="border-white/85"],
+    [class~="border-white/90"], [class~="border-white/95"]
+  ):not([class*="dark:border-"]) {
+    border-color: rgba(148, 163, 184, 0.24);
+  }
+
+  :is(
+    [class~="border-emerald-200"], [class~="border-emerald-200/60"],
+    [class~="border-emerald-200/80"], [class~="border-emerald-300"],
+    [class~="border-emerald-300/70"], [class~="border-emerald-300/80"],
+    [class~="border-teal-200"], [class~="border-blue-200"],
+    [class~="border-blue-200/80"], [class~="border-blue-300"],
+    [class~="border-indigo-100"], [class~="border-indigo-200"],
+    [class~="border-rose-200"], [class~="border-rose-200/60"],
+    [class~="border-rose-200/80"], [class~="border-rose-300"],
+    [class~="border-rose-300/60"], [class~="border-amber-200"],
+    [class~="border-amber-200/60"], [class~="border-amber-200/80"],
+    [class~="border-amber-300"], [class~="border-amber-300/80"],
+    [class~="border-orange-200"]
+  ):not([class*="dark:border-"]) {
+    border-color: rgba(148, 163, 184, 0.32);
+  }
+
+  [class*="hover:bg-white"]:not([class*="dark:hover:bg-"]):hover,
+  [class*="hover:bg-slate-50"]:not([class*="dark:hover:bg-"]):hover,
+  [class*="hover:bg-slate-100"]:not([class*="dark:hover:bg-"]):hover,
+  [class~="hover:bg-slate-200"]:not([class*="dark:hover:bg-"]):hover {
+    background-color: rgba(148, 163, 184, 0.14);
+  }
+
+  [class~="hover:text-slate-800"]:not([class*="dark:hover:text-"]):hover,
+  [class~="hover:text-slate-900"]:not([class*="dark:hover:text-"]):hover {
+    color: #F1F5F9;
+  }
+
+  :is(
+    [class~="hover:text-emerald-600"], [class~="hover:text-emerald-700"],
+    [class~="hover:text-teal-600"]
+  ):not([class*="dark:hover:text-"]):hover {
+    color: #6EE7B7;
+  }
+
+  :is([class~="hover:text-blue-600"]):not([class*="dark:hover:text-"]):hover {
+    color: #93C5FD;
+  }
+
+  :is([class~="hover:text-rose-600"], [class~="hover:text-rose-700"]):not([class*="dark:hover:text-"]):hover {
+    color: #FDA4AF;
+  }
+
+  [class~="hover:text-amber-600"]:not([class*="dark:hover:text-"]):hover {
+    color: #FCD34D;
+  }
+
+}
+
+body {
+  font-family: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--bg-mesh);
+  background-attachment: fixed;
+  background-size: cover;
+  color: #0f172a;
+  transition: background 0.4s ease;
+}
+
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: blur(1px)) {
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl,
+  .backdrop-blur-2xl {
+    background-color: rgba(255, 255, 255, 0.92) !important;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .backdrop-blur-sm,
+    .backdrop-blur-md,
+    .backdrop-blur-lg,
+    .backdrop-blur-xl,
+    .backdrop-blur-2xl {
+      background-color: rgba(15, 23, 42, 0.92) !important;
+    }
+  }
+}
+
+/* WCAG 2.1 AA: Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ========================================================================= */
+/* SCROLLBAR UTILITIES */
+/* ========================================================================= */
+
+/* Ẩn hoàn toàn thanh scrollbar nhưng vẫn cho phép vuốt chạm / cuộn ngang */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox */
+}
+
+/* Custom scrollbar thanh mảnh cho dropdown và navigation */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.6);
+}
+
+/* Loại bỏ viền đen focus hình chữ nhật mặc định của trình duyệt trên biểu đồ Recharts SVG */
+.recharts-wrapper,
+.recharts-wrapper:focus,
+.recharts-wrapper *:focus,
+.recharts-surface,
+.recharts-surface:focus,
+.recharts-sector,
+.recharts-sector:focus,
+.recharts-pie-sector,
+.recharts-pie-sector:focus,
+.recharts-layer,
+.recharts-layer:focus,
+.recharts-bar-rectangle,
+.recharts-bar-rectangle:focus,
+svg.recharts-surface,
+svg.recharts-surface:focus,
+svg.recharts-surface *,
+svg.recharts-surface *:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+svg.recharts-surface path,
+svg.recharts-surface rect,
+svg.recharts-surface g,
+svg.recharts-surface text {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* ========================================================================= */
+/* ANIMATION: TOAST COUNTDOWN PROGRESS */
+/* ========================================================================= */
+@keyframes toast-progress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
