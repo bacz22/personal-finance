@@ -33,7 +33,7 @@ export interface TransactionTableProps {
   className?: string
   /** Trang hiện tại (mặc định 1) */
   page?: number
-  /** Kích thước trang (mặc định 20) */
+  /** Kích thước trang (mặc định 10) */
   pageSize?: number
   /** Tổng số giao dịch */
   totalItems?: number
@@ -61,7 +61,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
   onAddTransaction,
   className = '',
   page = 1,
-  pageSize = 20,
+  pageSize = 10,
   totalItems,
   onPageChange,
 }) => {

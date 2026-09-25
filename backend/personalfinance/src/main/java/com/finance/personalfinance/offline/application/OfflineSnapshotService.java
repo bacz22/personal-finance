@@ -57,7 +57,7 @@ public class OfflineSnapshotService {
                 Instant.now(),
                 new OfflineSnapshotResponse.OfflineUser(
                         user.getId().toString(), user.getFullName(), user.getEmail(),
-                        user.getCurrency(), user.isMustChangePassword()
+                        user.getCurrency()
                 ),
                 categories.stream().map(category -> toCategory(
                         category, transactionCounts.getOrDefault(category.getId(), 0L)

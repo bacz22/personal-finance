@@ -1,14 +1,11 @@
 package com.finance.personalfinance.auth.api;
 
 import com.finance.personalfinance.auth.api.request.LoginRequest;
-import com.finance.personalfinance.auth.api.request.ForgotPasswordRequest;
 import com.finance.personalfinance.auth.api.request.RegisterRequest;
 import com.finance.personalfinance.auth.api.response.LoginResponse;
-import com.finance.personalfinance.auth.api.response.ForgotPasswordResponse;
 import com.finance.personalfinance.auth.api.response.RefreshResponse;
 import com.finance.personalfinance.auth.api.response.RegisterResponse;
 import com.finance.personalfinance.auth.application.AuthService;
-import com.finance.personalfinance.auth.application.PasswordRecoveryService;
 import com.finance.personalfinance.auth.application.LoginResult;
 import com.finance.personalfinance.auth.application.RefreshResult;
 import com.finance.personalfinance.auth.application.RefreshTokenService;
@@ -41,21 +38,10 @@ public class AuthController {
     private final RefreshTokenService refreshTokenService;
     private final SessionService sessionService;
     private final JwtDecoder jwtDecoder;
-    private final PasswordRecoveryService passwordRecoveryService;
 
     @PostMapping("/register")
     public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(registrationService.register(request));
-    }
-
-    @PostMapping("/forgot-password")
-    public ResponseEntity<ForgotPasswordResponse> forgotPassword(
-            @Valid @RequestBody ForgotPasswordRequest request,
-            HttpServletRequest httpRequest
-    ) {
-        String message = passwordRecoveryService.requestTemporaryPassword(
-                request.getEmail(), httpRequest.getRemoteAddr());
-        return ResponseEntity.accepted().body(new ForgotPasswordResponse(message));
     }
 
     @PostMapping("/login")

@@ -47,7 +47,6 @@ public class RegistrationService {
                 .fullName(saved.getFullName())
                 .email(saved.getEmail())
                 .currency(saved.getCurrency())
-                .mustChangePassword(saved.isMustChangePassword())
                 .createdAt(saved.getCreatedAt())
                 .build();
     }

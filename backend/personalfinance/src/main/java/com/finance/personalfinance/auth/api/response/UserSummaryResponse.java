@@ -12,7 +12,6 @@ public class UserSummaryResponse {
     String fullName;
     String email;
     String currency;
-    boolean mustChangePassword;
 
     public static UserSummaryResponse from(User user) {
         return UserSummaryResponse.builder()
@@ -20,7 +19,6 @@ public class UserSummaryResponse {
                 .fullName(user.getFullName())
                 .email(user.getEmail())
                 .currency(user.getCurrency())
-                .mustChangePassword(user.isMustChangePassword())
                 .build();
     }
 }

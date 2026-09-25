@@ -28,5 +28,3 @@ VITE_API_BASE_URL=http://localhost:8080
 - `DELETE /api/v1/categories/{id}` (tạm ngưng danh mục)
 
 Access token chỉ được giữ trong bộ nhớ của trình duyệt; refresh token do backend cấp qua HttpOnly cookie. Khi tải lại trang, giao diện thử khôi phục phiên bằng refresh cookie. Backend cần cho phép origin của web app và credentials trong CORS.
-
-Backend hỗ trợ khôi phục mật khẩu bằng mật khẩu tạm gửi qua email. Cần cấu hình SMTP trong môi trường chạy backend; sau khi đăng nhập bằng mật khẩu tạm, người dùng phải đổi mật khẩu trước khi dùng ứng dụng.

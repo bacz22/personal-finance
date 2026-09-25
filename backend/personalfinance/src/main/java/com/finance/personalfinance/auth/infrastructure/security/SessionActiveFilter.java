@@ -65,19 +65,8 @@ public class SessionActiveFilter extends OncePerRequestFilter {
             reject(request, response, "USER_NOT_FOUND", "Tài khoản không còn tồn tại.");
             return;
         }
-        if (user.isMustChangePassword() && !isPasswordChangeAllowed(request)) {
-            reject(request, response, "PASSWORD_CHANGE_REQUIRED",
-                    "Bạn cần đổi mật khẩu trước khi tiếp tục sử dụng ứng dụng.", 403);
-            return;
-        }
 
         filterChain.doFilter(request, response);
-    }
-
-    private boolean isPasswordChangeAllowed(HttpServletRequest request) {
-        return ("GET".equals(request.getMethod()) && "/api/v1/users/me".equals(request.getRequestURI()))
-                || ("PATCH".equals(request.getMethod())
-                && "/api/v1/users/me/password".equals(request.getRequestURI()));
     }
 
     private void reject(HttpServletRequest request, HttpServletResponse response, String code, String message)

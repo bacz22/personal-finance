@@ -3,7 +3,6 @@ export interface UserSummary {
   fullName: string
   email: string
   currency: string
-  mustChangePassword: boolean
 }
 
 export interface LoginRequest {
@@ -38,14 +37,6 @@ export interface ChangePasswordRequest {
   currentPassword: string
   newPassword: string
   confirmPassword: string
-}
-
-export interface ForgotPasswordRequest {
-  email: string
-}
-
-export interface ForgotPasswordResponse {
-  message: string
 }
 
 export interface ApiFieldError {
@@ -226,12 +217,6 @@ export const authApi = {
   register: (request: RegisterRequest) =>
     apiRequest<RegisterResponse>(
       '/api/v1/auth/register',
-      { method: 'POST', body: JSON.stringify(request) },
-      { authenticated: false, retryUnauthorized: false },
-    ),
-  forgotPassword: (request: ForgotPasswordRequest) =>
-    apiRequest<ForgotPasswordResponse>(
-      '/api/v1/auth/forgot-password',
       { method: 'POST', body: JSON.stringify(request) },
       { authenticated: false, retryUnauthorized: false },
     ),

@@ -288,7 +288,7 @@ export const AppLayout: React.FC = () => {
       {/* 4. MOBILE FLOATING PILL NAVIGATION — Instagram / Threads Style Floating Island */}
       {/* ========================================================================= */}
       <nav
-        className="md:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-sm h-14 bg-[var(--glass-surface,rgba(255,255,255,0.92))] backdrop-blur-[var(--glass-blur,16px)] rounded-full border border-slate-200 dark:border-white/10 shadow-[0_12px_36px_rgba(15,23,42,0.2),0_2px_8px_rgba(15,23,42,0.08)] ring-1 ring-black/5 dark:ring-white/10 p-1.5 flex items-center select-none transition-all duration-200"
+        className="md:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-sm h-16 bg-[var(--glass-surface,rgba(255,255,255,0.92))] backdrop-blur-[var(--glass-blur,16px)] rounded-full border border-slate-200 dark:border-white/10 shadow-[0_12px_36px_rgba(15,23,42,0.2),0_2px_8px_rgba(15,23,42,0.08)] ring-1 ring-black/5 dark:ring-white/10 p-1.5 flex items-center select-none transition-all duration-200"
         aria-label="Điều hướng di động"
       >
         {/* Animated Sliding Pill Background — Full-size capsule with smooth transition like Image 1 */}
@@ -315,7 +315,7 @@ export const AppLayout: React.FC = () => {
               title={item.name}
               aria-label={item.name}
               aria-current={isActive ? 'page' : undefined}
-              className={`relative z-10 flex-1 h-full flex items-center justify-center rounded-full transition-all duration-200 active:scale-90 select-none ${
+              className={`relative z-10 flex-1 h-full min-h-11 flex items-center justify-center rounded-full transition-all duration-200 active:scale-90 select-none ${
                 isActive
                   ? 'text-slate-950 dark:text-white font-semibold'
                   : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white'

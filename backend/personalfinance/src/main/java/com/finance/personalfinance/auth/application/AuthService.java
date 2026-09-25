@@ -4,10 +4,8 @@ import com.finance.personalfinance.auth.api.request.LoginRequest;
 import com.finance.personalfinance.auth.api.response.LoginResponse;
 import com.finance.personalfinance.auth.api.response.UserSummaryResponse;
 import com.finance.personalfinance.auth.domain.model.AuthSession;
-import com.finance.personalfinance.auth.domain.model.PasswordRecoveryCredential;
 import com.finance.personalfinance.auth.domain.model.RefreshToken;
 import com.finance.personalfinance.auth.domain.repository.AuthSessionRepository;
-import com.finance.personalfinance.auth.domain.repository.PasswordRecoveryCredentialRepository;
 import com.finance.personalfinance.auth.domain.repository.RefreshTokenRepository;
 import com.finance.personalfinance.auth.infrastructure.cookie.AuthCookieService;
 import com.finance.personalfinance.auth.infrastructure.jwt.AccessTokenService;
@@ -39,8 +37,6 @@ public class AuthService {
     private final UserRepository userRepository;
     private final AuthSessionRepository sessionRepository;
     private final RefreshTokenRepository refreshTokenRepository;
-    private final PasswordRecoveryCredentialRepository recoveryCredentialRepository;
-    private final AuthSessionRevocationService sessionRevocationService;
     private final PasswordEncoder passwordEncoder;
     private final JwtProperties jwtProperties;
     private final AccessTokenService accessTokenService;
@@ -60,21 +56,6 @@ public class AuthService {
         }
 
         User user = candidate.get();
-        if (!passwordMatches) {
-            Optional<PasswordRecoveryCredential> pendingCredential =
-                    recoveryCredentialRepository.findByUserIdForUpdate(user.getId());
-            if (pendingCredential.isPresent()
-                    && pendingCredential.get().isUsable()
-                    && passwordEncoder.matches(request.getPassword(), pendingCredential.get().getPasswordHash())) {
-                PasswordRecoveryCredential credential = pendingCredential.get();
-                user.updatePasswordHash(passwordEncoder.encode(tokenGenerator.generateRawToken()));
-                user.requirePasswordChange();
-                credential.consume();
-                recoveryCredentialRepository.save(credential);
-                sessionRevocationService.revokeAllForUser(user.getId(), "PASSWORD_RECOVERY");
-                passwordMatches = true;
-            }
-        }
         if (!passwordMatches) {
             throw new AppException(HttpStatus.UNAUTHORIZED, "INVALID_CREDENTIALS",
                     "Email hoặc mật khẩu không chính xác.");

@@ -13,6 +13,5 @@ public class RegisterResponse {
     String fullName;
     String email;
     String currency;
-    boolean mustChangePassword;
     Instant createdAt;
 }

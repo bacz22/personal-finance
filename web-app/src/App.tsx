@@ -11,9 +11,6 @@ import { CategoriesPage } from './pages/CategoriesPage'
 import { SettingsPage } from './pages/SettingsPage'
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
-import { ForgotPasswordPage } from './pages/ForgotPasswordPage'
-import { ChangeTemporaryPasswordPage } from './pages/ChangeTemporaryPasswordPage'
-import { PASSWORD_RECOVERY_ENABLED } from './config'
 import { ColdStartNotice } from './components/ui/ColdStartNotice'
 
 const RouteLoading: React.FC = () => (
@@ -24,26 +21,20 @@ const RouteLoading: React.FC = () => (
 )
 
 const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isLoading, isAuthenticated, user } = useAuth()
+  const { isLoading, isAuthenticated } = useAuth()
   const location = useLocation()
   if (isLoading) return <RouteLoading />
   if (!isAuthenticated) {
     return <Navigate to="/login" replace state={{ from: location.pathname }} />
   }
-  if (user?.mustChangePassword && location.pathname !== '/change-password') {
-    return <Navigate to="/change-password" replace />
-  }
-  if (!user?.mustChangePassword && location.pathname === '/change-password') {
-    return <Navigate to="/dashboard" replace />
-  }
   return <>{children}</>
 }
 
 const GuestOnly: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isLoading, isAuthenticated, user } = useAuth()
+  const { isLoading, isAuthenticated } = useAuth()
   if (isLoading) return <RouteLoading />
   return isAuthenticated
-    ? <Navigate to={user?.mustChangePassword ? '/change-password' : '/dashboard'} replace />
+    ? <Navigate to="/dashboard" replace />
     : <>{children}</>
 }
 
@@ -56,10 +47,8 @@ export default function App() {
           {/* Auth routes (độc lập, không có sidebar layout) */}
           <Route path="/login" element={<GuestOnly><LoginPage /></GuestOnly>} />
           <Route path="/register" element={<GuestOnly><RegisterPage /></GuestOnly>} />
-          <Route path="/forgot-password" element={PASSWORD_RECOVERY_ENABLED
-            ? <GuestOnly><ForgotPasswordPage /></GuestOnly>
-            : <Navigate to="/login" replace />} />
-          <Route path="/change-password" element={<RequireAuth><ChangeTemporaryPasswordPage /></RequireAuth>} />
+          <Route path="/forgot-password" element={<Navigate to="/login" replace />} />
+          <Route path="/change-password" element={<Navigate to="/settings" replace />} />
 
           {/* Layout dùng chung cho toàn bộ app với React Router Outlet */}
           <Route path="/" element={<RequireAuth><AppLayout /></RequireAuth>}>

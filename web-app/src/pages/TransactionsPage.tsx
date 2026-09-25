@@ -19,7 +19,7 @@ import {
   type TransactionDraft,
 } from '../components/transactions/api'
 
-const PAGE_SIZE = 20
+const PAGE_SIZE = 10
 
 function toDraft(transaction: Transaction): TransactionDraft {
   return {

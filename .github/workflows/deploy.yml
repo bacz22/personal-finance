@@ -48,10 +48,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Lint Web App
+        run: npm run lint
+
       - name: Build Web App
         env:
           VITE_API_BASE_URL: https://api-chitieu.bmailflow.online
-          VITE_PASSWORD_RECOVERY_ENABLED: "false"
         run: npm run build
 
       - name: Deploy to Cloudflare Pages
@@ -61,11 +63,48 @@ jobs:
         run: npx wrangler pages deploy dist --project-name=bmailflow-chitieu --commit-dirty=true
 
   deploy-backend:
-    name: Trigger Backend Deploy (Render)
+    name: Test & Deploy Backend (Render)
     needs: filter
     if: ${{ github.event_name == 'workflow_dispatch' || needs.filter.outputs.backend == 'true' }}
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend/personalfinance
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: personalfinance
+          POSTGRES_USER: personalfinance
+          POSTGRES_PASSWORD: personalfinance_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U personalfinance -d personalfinance"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_NAME: personalfinance
+      DB_USER: personalfinance
+      DB_PASSWORD: personalfinance_ci
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+          cache-dependency-path: backend/personalfinance/pom.xml
+
+      - name: Test Backend
+        run: bash ./mvnw -B test
+
       - name: Trigger Render Webhook
         env:
           RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}

@@ -11,7 +11,6 @@ import {
 import { Button, Input, Checkbox } from '../components/ui'
 import { ApiError } from '../api'
 import { useAuth } from '../AuthContext'
-import { PASSWORD_RECOVERY_ENABLED } from '../config'
 import { ColdStartNotice } from '../components/ui/ColdStartNotice'
 
 export const LoginPage: React.FC = () => {
@@ -62,8 +61,8 @@ export const LoginPage: React.FC = () => {
     setIsSubmitting(true)
     setErrors({})
     try {
-      const currentUser = await login({ email: email.trim(), password, rememberMe })
-      navigate(currentUser.mustChangePassword ? '/change-password' : redirectTo, { replace: true })
+      await login({ email: email.trim(), password, rememberMe })
+      navigate(redirectTo, { replace: true })
     } catch (error) {
       if (error instanceof ApiError && error.fieldErrors.length > 0) {
         const fieldErrors = Object.fromEntries(error.fieldErrors.map(({ field, message }) => [field, message]))
@@ -164,8 +163,7 @@ export const LoginPage: React.FC = () => {
               disabled={isSubmitting}
             />
 
-            {/* Remember Me & Forgot Password */}
-            <div className="flex items-center justify-between pt-1">
+            <div className="flex items-center justify-start pt-1">
               <Checkbox
                 id="remember-me"
                 label="Ghi nhớ đăng nhập"
@@ -174,21 +172,7 @@ export const LoginPage: React.FC = () => {
                 disabled={isSubmitting}
               />
 
-              {PASSWORD_RECOVERY_ENABLED && (
-                <Link
-                  to="/forgot-password"
-                  className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 hover:underline transition-colors focus:outline-none"
-                >
-                  Quên mật khẩu?
-                </Link>
-              )}
             </div>
-
-            {!PASSWORD_RECOVERY_ENABLED && (
-              <p role="status" className="rounded-xl bg-slate-100/80 p-2.5 text-xs leading-relaxed text-slate-600 dark:bg-slate-800/80 dark:text-slate-300">
-                Khôi phục mật khẩu đang tạm tắt trong bản demo. Vui lòng liên hệ quản trị viên để được hỗ trợ.
-              </p>
-            )}
 
             {/* Primary Submit Button */}
             <div className="pt-2">

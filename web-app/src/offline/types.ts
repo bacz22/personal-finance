@@ -68,7 +68,6 @@ export interface OfflineSession {
     fullName: string
     email: string
     currency: string
-    mustChangePassword: boolean
   }
 }
 

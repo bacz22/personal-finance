@@ -14,8 +14,7 @@ public record OfflineSnapshotResponse(
             String id,
             String fullName,
             String email,
-            String currency,
-            boolean mustChangePassword
+            String currency
     ) { }
 
     public record OfflineCategory(

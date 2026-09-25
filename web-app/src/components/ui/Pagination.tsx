@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 export interface PaginationProps {
   /** Trang hiện tại (1-indexed) */
   page: number
-  /** Số lượng mục trên mỗi trang (mặc định 20) */
+  /** Số lượng mục trên mỗi trang (mặc định 10) */
   pageSize?: number
   /** Tổng số mục dữ liệu */
   totalItems: number
