@@ -98,29 +98,29 @@ export const BudgetOverviewCard: React.FC<BudgetOverviewCardProps> = ({
       {/* 3 Chỉ số KPI ngân sách tổng - Bố cục tối ưu mobile (2 cột + 1 hero card) */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-4">
         {/* KPI 1: Tổng hạn mức */}
-        <div className="p-3 sm:p-4 rounded-xl bg-slate-50/90 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700 space-y-0.5 sm:space-y-1">
+        <div className="min-w-0 p-3 sm:p-4 rounded-xl bg-slate-50/90 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700 space-y-0.5 sm:space-y-1">
           <div className="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-600 dark:text-slate-300 font-medium">
             <Wallet className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 shrink-0" />
             <span className="truncate">Tổng hạn mức</span>
           </div>
           <CurrencyText
             amount={totalLimit}
-            size="xl"
-            className="font-bold font-mono text-slate-900 dark:text-slate-100 truncate"
+            size="sm"
+            className="sm:text-xl md:text-2xl max-w-full whitespace-normal wrap-anywhere leading-tight font-bold font-mono text-slate-900 dark:text-slate-100"
           />
         </div>
 
         {/* KPI 2: Tổng đã chi */}
-        <div className="p-3 sm:p-4 rounded-xl bg-slate-50/90 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700 space-y-0.5 sm:space-y-1">
+        <div className="min-w-0 p-3 sm:p-4 rounded-xl bg-slate-50/90 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700 space-y-0.5 sm:space-y-1">
           <div className="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-600 dark:text-slate-300 font-medium">
             <TrendingDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 shrink-0" />
             <span className="truncate">Đã chi tiêu</span>
           </div>
           <CurrencyText
             amount={totalSpent}
-            size="xl"
+            size="sm"
             type={isExceeded ? 'expense' : isWarning ? 'expense' : 'neutral'}
-            className={`font-bold font-mono truncate ${
+            className={`sm:text-xl md:text-2xl max-w-full whitespace-normal wrap-anywhere leading-tight font-bold font-mono ${
               isExceeded
                 ? 'text-rose-600'
                 : isWarning
@@ -132,7 +132,7 @@ export const BudgetOverviewCard: React.FC<BudgetOverviewCardProps> = ({
 
         {/* KPI 3: Số dư ngân sách còn lại (Nổi bật trên mobile: col-span-2) */}
         <div
-          className={`col-span-2 sm:col-span-1 p-3 sm:p-4 rounded-xl border space-y-0.5 sm:space-y-1 ${
+          className={`col-span-2 sm:col-span-1 min-w-0 p-3 sm:p-4 rounded-xl border space-y-0.5 sm:space-y-1 ${
             totalRemaining >= 0
               ? 'bg-emerald-50/60 dark:bg-emerald-950/50 border-emerald-200/80 dark:border-emerald-900'
               : 'bg-rose-50/60 dark:bg-rose-950/50 border-rose-200/80 dark:border-rose-900'
@@ -152,8 +152,8 @@ export const BudgetOverviewCard: React.FC<BudgetOverviewCardProps> = ({
             amount={Math.abs(totalRemaining)}
             type={totalRemaining >= 0 ? 'income' : 'expense'}
             showSign={totalRemaining < 0}
-            size="xl"
-            className={`font-extrabold font-mono truncate ${
+            size="sm"
+            className={`sm:text-xl md:text-2xl max-w-full whitespace-normal wrap-anywhere leading-tight font-extrabold font-mono ${
               totalRemaining >= 0 ? 'text-emerald-700 dark:text-emerald-300' : 'text-rose-600 dark:text-rose-300'
             }`}
           />
